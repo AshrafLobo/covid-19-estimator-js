@@ -21,10 +21,13 @@ const covid19ImpactEstimator = (data) => {
   const calcEstimation = (days, severe = false) => {
     const impactGrp = severe ? ['severeImpact', 50] : ['impact', 10];
     const impactData = covidData[impactGrp[0]];
-    const factor = 2 ** Math.floor(days / 3);
 
     impactData.currentlyInfected = covidData.data.reportedCases * impactGrp[1];
-    impactData.infectionsByRequestedTime = impactData.currentlyInfected * factor;
+    impactData.infectionsByRequestedTime = impactData.currentlyInfected
+      * 2 ** Math.floor(days / 3);
+    impactData.severeCasesByRequestedTime = impactData.infectionsByRequestedTime * 0.15;
+    impactData.hospitalBedsByRequestedTime = Math.floor(covidData.data.totalHospitalBeds * 0.35)
+      - impactData.severeCasesByRequestedTime;
   };
 
   calcEstimation(numberOfDays);
