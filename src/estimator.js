@@ -5,30 +5,33 @@ const covid19ImpactEstimator = (data) => {
     severeImpact: {}
   };
 
+  const {
+    periodType,
+    timeToElapse,
+    reportedCases,
+    totalHospitalBeds
+  } = covidData.data;
+
   let numberOfDays = 0;
 
-  switch (covidData.data.periodType) {
+  switch (periodType) {
     case 'weeks':
-      numberOfDays = covidData.data.timeToElapse * 7;
+      numberOfDays = timeToElapse * 7;
       break;
     case 'months':
-      numberOfDays = covidData.data.timeToElapse * 30;
+      numberOfDays = timeToElapse * 30;
       break;
     default:
-      numberOfDays = covidData.data.timeToElapse;
+      numberOfDays = timeToElapse;
   }
 
   const calcEstimation = (days, severe = false) => {
     const impactGrp = severe ? ['severeImpact', 50] : ['impact', 10];
     const impactData = covidData[impactGrp[0]];
-    const {
-      reportedCases,
-      totalHospitalBeds
-    } = covidData.data;
 
     impactData.currentlyInfected = reportedCases * impactGrp[1];
     impactData.infectionsByRequestedTime = impactData.currentlyInfected
-      * (2 ** Math.trunc(numberOfDays / 3));
+      * (2 ** Math.trunc(days / 3));
     impactData.severeCasesByRequestedTime = Math.trunc(impactData.infectionsByRequestedTime * 0.15);
     impactData.hospitalBedsByRequestedTime = Math.trunc(totalHospitalBeds * 0.35
       - impactData.severeCasesByRequestedTime);
