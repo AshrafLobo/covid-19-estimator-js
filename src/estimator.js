@@ -5,30 +5,45 @@ const covid19ImpactEstimator = (data) => {
     severeImpact: {}
   };
 
+  const {
+    periodType,
+    timeToElapse,
+    reportedCases,
+    totalHospitalBeds,
+    region: {
+      avgDailyIncomeInUSD,
+      avgDailyIncomePopulation
+    }
+  } = covidData.data;
+
   let numberOfDays = 0;
 
-  switch (data.periodType) {
+  switch (periodType) {
     case 'weeks':
-      numberOfDays = data.timeToElapse * 7;
+      numberOfDays = timeToElapse * 7;
       break;
     case 'months':
-      numberOfDays = data.timeToElapse * 30;
+      numberOfDays = timeToElapse * 30;
       break;
     default:
-      numberOfDays = data.timeToElapse;
+      numberOfDays = timeToElapse;
   }
 
   const calcEstimation = (days, severe = false) => {
     const impactGrp = severe ? ['severeImpact', 50] : ['impact', 10];
     const impactData = covidData[impactGrp[0]];
 
-    impactData.currentlyInfected = covidData.data.reportedCases * impactGrp[1];
+    impactData.currentlyInfected = reportedCases * impactGrp[1];
     impactData.infectionsByRequestedTime = impactData.currentlyInfected
-      * (2 ** Math.floor(days / 3));
-    impactData.severeCasesByRequestedTime = Math.floor((impactData.infectionsByRequestedTime
-      * 15) / 100);
-    impactData.hospitalBedsByRequestedTime = Math.floor((covidData.data.totalHospitalBeds
-      * 35) / 100) - impactData.severeCasesByRequestedTime + 1;
+      * (2 ** Math.trunc(days / 3));
+    impactData.severeCasesByRequestedTime = Math.trunc(impactData.infectionsByRequestedTime * 0.15);
+    impactData.hospitalBedsByRequestedTime = Math.trunc(totalHospitalBeds * 0.35
+      - impactData.severeCasesByRequestedTime);
+    impactData.casesForICUByRequestedTime = Math.trunc(impactData.infectionsByRequestedTime * 0.05);
+    impactData.casesForVentilatorsByRequestedTime = Math.trunc(impactData.infectionsByRequestedTime
+      * 0.02);
+    impactData.dollarsInFlight = Math.trunc((impactData.infectionsByRequestedTime
+      * avgDailyIncomePopulation * avgDailyIncomeInUSD) / days);
   };
 
   calcEstimation(numberOfDays);
