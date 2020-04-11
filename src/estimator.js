@@ -23,8 +23,8 @@ const covid19ImpactEstimator = (data) => {
     const impactData = covidData[impactGrp[0]];
     const factor = 2 ** Math.floor(days / 3);
 
-    impactData.confirmedCases = covidData.data.reportedCases * impactGrp[1];
-    impactData.infectionsByRequestedTime = impactData.confirmedCases * factor;
+    impactData.currentlyInfected = covidData.data.reportedCases * impactGrp[1];
+    impactData.infectionsByRequestedTime = impactData.currentlyInfected * factor;
   };
 
   calcEstimation(numberOfDays);
