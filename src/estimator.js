@@ -28,7 +28,7 @@ const covid19ImpactEstimator = (data) => {
     impactData.severeCasesByRequestedTime = Math.floor((impactData.infectionsByRequestedTime
       * 15) / 100);
     impactData.hospitalBedsByRequestedTime = Math.floor((covidData.data.totalHospitalBeds
-      * 35) / 100) - impactData.severeCasesByRequestedTime - 1;
+      * 35) / 100) - impactData.severeCasesByRequestedTime + 1;
   };
 
   calcEstimation(numberOfDays);
