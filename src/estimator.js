@@ -11,7 +11,8 @@ const covid19ImpactEstimator = (data) => {
     reportedCases,
     totalHospitalBeds,
     region: {
-      avgDailyIncomeInUSD
+      avgDailyIncomeInUSD,
+      avgDailyIncomePopulation
     }
   } = covidData.data;
 
@@ -42,7 +43,7 @@ const covid19ImpactEstimator = (data) => {
     impactData.casesForVentilatorsByRequestedTime = Math.trunc(impactData.infectionsByRequestedTime
       * 0.02);
     impactData.dollarsInFlight = Math.trunc((impactData.infectionsByRequestedTime
-      * 0.65 * avgDailyIncomeInUSD) / days);
+      * avgDailyIncomePopulation * avgDailyIncomeInUSD) / days);
   };
 
   calcEstimation(numberOfDays);
