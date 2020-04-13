@@ -1,19 +1,19 @@
-<html lang="en-US">
+<html lang="en">
 
 <head>
   <!-- Required meta tags -->
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="Coronavirus impact estimator. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque, dolor? Aut labore eaque officiis aliquid iure quas sint tempore obcaecati dignissimos placeat aperiam, amet adipisci quibusdam vitae nobis, assumenda doloribus!
-  " />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="Description" content="Coronavirus impact estimator. It calculates the total number 
+    of beds required after a given number of days">
   <meta name="keywords"
-    content="Corona, coronavirus, covid-19, estimator, coronavirus calculator, coronavirus estimator" />
-  <meta name="author" content="Ashraf Lobo" />
+    content="Corona, coronavirus, covid-19, estimator, coronavirus calculator, coronavirus estimator">
+  <meta name="author" content="Ashraf Lobo">
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-  <link rel="stylesheet" href="style.css" />
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
 
   <title>Covid-19 Estimator</title>
 </head>
@@ -75,7 +75,7 @@
         </div>
 
         <!--Form second column-->
-        <div class="col-md align-self-md-stretch">
+        <div class="col-md align-self-md-stretch mt-3 mt-md-0">
           <fieldset class="border p-3">
             <legend class="font-weight-light">Additional data</legend>
 
@@ -85,9 +85,9 @@
                 <select class="form-control" id="period_type" name="periodType" pattern="[0-9]+"
                   onblur="validateInput(this)" required data-period-type>
                   <option value="" selected disabled>Select a time period</option>
-                  <option>Days</option>
-                  <option>Weeks</option>
-                  <option>Months</option>
+                  <option>days</option>
+                  <option>weeks</option>
+                  <option>months</option>
                 </select>
                 <div class="invalid-feedback">Please fill out this field.</div>
               </div>
@@ -183,7 +183,7 @@
             covidData.region[elements[element].name] = elements[element].value;
           }
           else {
-            covidData[elements[element].name] = elements[element].value.toLowerCase();
+            covidData[elements[element].name] = elements[element].value;
           }
         }
       }
