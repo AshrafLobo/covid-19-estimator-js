@@ -1,0 +1,24 @@
+form {
+  max-width: 1000px;
+}
+
+form fieldset legend {
+  width: inherit; /* Or auto */
+  padding: 0 10px; /* To give a bit of padding on the left and right */
+  border-bottom: none;
+}
+
+form label {
+  font-weight: 300;
+}
+
+form button {
+  min-width: 200px;
+  color: lightgrey;
+}
+
+form .form-control:invalid,
+form .form-control:valid {
+  background-position: right calc(0.8em + 0.1875rem) center;
+  background-size: calc(0.4em + 0.375rem) calc(0.4em + 0.375rem);
+}
