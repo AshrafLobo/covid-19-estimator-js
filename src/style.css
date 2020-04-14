@@ -1,3 +1,13 @@
+body {
+  background-color: darkslategray;
+  color: white;
+}
+
+hr {
+  width: 1000px;
+  border-color: white;
+}
+
 form {
   max-width: 1000px;
 }
