@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="Description" content="Coronavirus impact estimator. It calculates the total number 
+    of beds required after a given number of days">
+  <meta name="keywords"
+    content="Corona, coronavirus, covid-19, estimator, coronavirus calculator, coronavirus estimator">
+  <meta name="author" content="Ashraf Lobo">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="style.css">
+
+  <title>Covid-19 Estimator</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-sm bg-light navbar-light justify-content-center">
+    <!-- Brand/logo -->
+    <a class="navbar-brand" href="#">Covid-19 Estimator</a>
+  </nav>
+
+  <h1 class="text-center m-3">COVID-19 ESTIMATOR</h1>
+  <hr>
+
+  <div class="container">
+    <form id="covidForm" class="mx-auto my-3 my-md-5" novalidate>
+      <div class="d-flex row">
+
+        <!-- Form first column-->
+        <div class="col-md align-self-md-stretch">
+          <fieldset class="border p-3 h-100">
+            <legend class="font-weight-light">Regional data</legend>
+
+            <div class="form-group">
+              <label for="region_name">Region</label>
+              <select class="form-control region_data" id="region_name" name="name" onblur="validateInput(this)"
+                required>
+                <option value="" selected disabled>Select a region</option>
+                <option>Africa</option>
+                <option>Asia</option>
+                <option>Antarctica</option>
+                <option>Australia</option>
+                <option>Europe</option>
+                <option>North America</option>
+                <option>South America</option>
+              </select>
+              <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="avg_age">Average age:</label>
+              <input type="text" class="form-control region_data" id="avg_age" placeholder="Enter average age"
+                name="avgAge" pattern="[0-9]+.*" onblur="validateInput(this)" required>
+              <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="avg_daily_income_USD">Average daily income in USD:</label>
+              <input type="text" class="form-control region_data" id="avg_daily_income_USD"
+                placeholder="Enter average daily income in USD" name="avgDailyIncomeUSD" pattern="[0-9]+.*"
+                onblur="validateInput(this)" required>
+              <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="avg_daily_income_pop">Average daily income population:</label>
+              <input type="text" class="form-control region_data" id="avg_daily_income_pop"
+                placeholder="Enter average daily income population" min="1" max="100" name="avgDailyIncomePopulation"
+                pattern="[0-9]+.*" onblur="validateInput(this)" required>
+              <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+          </fieldset>
+        </div>
+
+        <!--Form second column-->
+        <div class="col-md align-self-md-stretch mt-3 mt-md-0">
+          <fieldset class="border p-3">
+            <legend class="font-weight-light">Additional data</legend>
+
+            <div class="form-row">
+              <div class="col-md mr-1 form-group">
+                <label for="period_type">Period type:</label>
+                <select class="form-control" id="period_type" name="periodType" pattern="[0-9]+"
+                  onblur="validateInput(this)" required data-period-type>
+                  <option value="" selected disabled>Select a time period</option>
+                  <option>days</option>
+                  <option>weeks</option>
+                  <option>months</option>
+                </select>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+
+              <div class="col-md ml-1 form-group">
+                <label for="time_to_ellapse">Time to ellapse:</label>
+                <input type="text" class="form-control" id="time_to_ellapse" placeholder="Time to ellapse"
+                  name="timeToElapse" pattern="[0-9]+" onblur="validateInput(this)" required data-time-to-elapse>
+                <div class="invalid-feedback">Please fill out this field.</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="reported_cases">Reported cases:</label>
+              <input type="text" class="form-control" id="reported_cases" placeholder="Enter the reported cases"
+                name="reportedCases" pattern="[0-9]+" onblur="validateInput(this)" required data-reported-cases>
+              <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="population">Population:</label>
+              <input type="text" class="form-control" id="population" placeholder="Enter the population"
+                name="population" pattern="[0-9]+" onblur="validateInput(this)" required data-population>
+              <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+
+            <div class="form-group">
+              <label for="total_hos_beds">Total hospital beds:</label>
+              <input type="text" class="form-control" id="total_hos_beds" placeholder="Enter the total hospital beds"
+                name="totalHospitalBbeds" pattern="[0-9]+" onblur="validateInput(this)" required
+                data-total-hospital-beds>
+              <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+
+      <div class="text-center text-md-right m-3 mr-md-0">
+        <button id="submit_covid_form" type="button" class="btn btn-outline-light" onclick="submitForm()"
+          data-go-estimate>Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script src="./estimator.js"></script>
+  <script>
+    const validateInput = (input) => {
+      if (input.value != "" && input.validity.valid) {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+      }
+      else {
+        input.classList.add("is-invalid");
+        input.classList.remove("is-valid");
+      }
+
+      let validationMessage = "Please fill out this field";
+      const childNodes = input.parentNode.childNodes;
+
+      if (input.validity.patternMismatch) {
+        validationMessage = "Please enter a valid data"
+      }
+
+      for (child in childNodes) {
+        if (childNodes[child].className === "invalid-feedback") {
+          childNodes[child].innerHTML = validationMessage;
+        }
+      }
+    };
+
+    const submitForm = () => {
+      let form = document.getElementById("covidForm");
+      let elements = form.elements;
+
+      const covidData = {
+        region: {}
+      };
+
+      for (element in elements) {
+        if (elements[element].value != undefined) {
+          if (elements[element].classList.contains("region_data")) {
+            covidData.region[elements[element].name] = elements[element].value;
+          }
+          else {
+            covidData[elements[element].name] = elements[element].value;
+          }
+        }
+      }
+
+      covid19ImpactEstimator(covidData);
+    };
+  </script>
+</body>
+
+</html>
